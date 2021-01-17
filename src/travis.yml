@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - openjdk15
+
+before_install:
+  - chmod +x mvnw
+
+script: ./mvnw clean install
+
+#notifications:
+#  email: hayrettinmavis@yahoo.com
