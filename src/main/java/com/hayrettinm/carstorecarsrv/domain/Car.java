@@ -38,7 +38,7 @@ public class Car {
     @Column(unique = true)
     private Long chasisNo;
     private BigDecimal price;
-    private CarModel carModel;
+    private String carModel;
 
     @Version
     private Long version;

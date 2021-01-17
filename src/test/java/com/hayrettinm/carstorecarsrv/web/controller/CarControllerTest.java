@@ -2,12 +2,14 @@ package com.hayrettinm.carstorecarsrv.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hayrettinm.carstorecarsrv.web.model.CarDto;
+import com.hayrettinm.carstorecarsrv.web.model.CarModel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,7 +37,7 @@ class CarControllerTest {
     @Test
     void saveNewCar() throws Exception {
 
-        CarDto carDto = CarDto.builder().build();
+        CarDto carDto = getValidCarDto();
         String carDtoJson = objectMapper.writeValueAsString(carDto);
 
         mockMvc.perform(post(URL)
@@ -48,12 +50,21 @@ class CarControllerTest {
     @Test
     void updateByCarId() throws Exception{
 
-        CarDto carDto = CarDto.builder().build();
+        CarDto carDto = getValidCarDto();
         String carDtoJson = objectMapper.writeValueAsString(carDto);
 
         mockMvc.perform(put(URL + UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(carDtoJson)
         ).andExpect(status().isNoContent());
+    }
+
+    CarDto getValidCarDto(){
+        return CarDto.builder()
+                .carModel(CarModel.SPORTS)
+                .name("New Car")
+                .price(new BigDecimal("235000"))
+                .chasisNo(123L)
+                .build();
     }
 }
